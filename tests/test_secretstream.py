@@ -52,7 +52,7 @@ def read_secretstream_vectors() -> List[Tuple[bytes, bytes, List[Chunk]]]:
     with open(path) as fp:
         jvectors = json.load(fp)
     unhex = binascii.unhexlify
-    vectors = [
+    return [
         (
             unhex(v["key"]),
             unhex(v["header"]),
@@ -68,7 +68,6 @@ def read_secretstream_vectors() -> List[Tuple[bytes, bytes, List[Chunk]]]:
         )
         for v in jvectors
     ]
-    return vectors
 
 
 @pytest.mark.parametrize(

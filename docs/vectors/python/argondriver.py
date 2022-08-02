@@ -74,12 +74,12 @@ class argonRunner:
 
     def _genSalt(self):
         sltln = self.rng.randint(self.mnsaltlen, self.mxsaltlen)
-        chrs = [self.rng.choice(self.GOODCHARS) for x in range(sltln)]
+        chrs = [self.rng.choice(self.GOODCHARS) for _ in range(sltln)]
         return "".join(chrs)
 
     def _genPw(self):
         pwln = self.rng.randint(self.mnpwlen, self.mxpwlen)
-        chrs = [self.rng.choice(self.GOODCHARS) for x in range(pwln)]
+        chrs = [self.rng.choice(self.GOODCHARS) for _ in range(pwln)]
         return "".join(chrs)
 
     def __next__(self):
@@ -156,6 +156,6 @@ if __name__ == "__main__":
 
     args = p.parse_args()
 
-    res = [x for x in argonRunner(args)]
+    res = list(argonRunner(args))
 
     json.dump(res, args.outfile, indent=2, separators=(",", ": "))

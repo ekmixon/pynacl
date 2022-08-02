@@ -18,7 +18,7 @@ import requests
 
 
 def run(*args, **kwargs):
-    print("[running] {}".format(list(args)))
+    print(f"[running] {list(args)}")
     subprocess.check_call(list(args), **kwargs)
 
 
@@ -28,9 +28,10 @@ def wait_for_build_complete_github_actions(session, token, run_url):
             run_url,
             headers={
                 "Content-Type": "application/json",
-                "Authorization": "token {}".format(token),
+                "Authorization": f"token {token}",
             },
         )
+
         response.raise_for_status()
         if response.json()["conclusion"] is not None:
             break
@@ -42,18 +43,20 @@ def download_artifacts_github_actions(session, token, run_url):
         run_url,
         headers={
             "Content-Type": "application/json",
-            "Authorization": "token {}".format(token),
+            "Authorization": f"token {token}",
         },
     )
+
     response.raise_for_status()
 
     response = session.get(
         response.json()["artifacts_url"],
         headers={
             "Content-Type": "application/json",
-            "Authorization": "token {}".format(token),
+            "Authorization": f"token {token}",
         },
     )
+
     response.raise_for_status()
     paths = []
     for artifact in response.json()["artifacts"]:
@@ -61,9 +64,10 @@ def download_artifacts_github_actions(session, token, run_url):
             artifact["archive_download_url"],
             headers={
                 "Content-Type": "application/json",
-                "Authorization": "token {}".format(token),
+                "Authorization": f"token {token}",
             },
         )
+
         with zipfile.ZipFile(io.BytesIO(response.content)) as z:
             for name in z.namelist():
                 if not name.endswith(".whl"):
@@ -89,24 +93,24 @@ def build_github_actions_wheels(token, version):
         headers={
             "Content-Type": "application/json",
             "Accept": "application/vnd.github.v3+json",
-            "Authorization": "token {}".format(token),
+            "Authorization": f"token {token}",
         },
         data=json.dumps({"ref": "master", "inputs": {"version": version}}),
     )
+
     response.raise_for_status()
 
     # Give it a few seconds for the run to kick off.
     time.sleep(5)
     response = session.get(
-        (
-            "https://api.github.com/repos/pyca/pynacl/actions/workflows/"
-            "wheel-builder.yml/runs?event=repository_dispatch"
-        ),
+        "https://api.github.com/repos/pyca/pynacl/actions/workflows/"
+        "wheel-builder.yml/runs?event=repository_dispatch",
         headers={
             "Content-Type": "application/json",
-            "Authorization": "token {}".format(token),
+            "Authorization": f"token {token}",
         },
     )
+
     response.raise_for_status()
     run_url = response.json()["workflow_runs"][0]["url"]
     wait_for_build_complete_github_actions(session, token, run_url)
@@ -121,12 +125,12 @@ def release(version):
     """
     github_token = getpass.getpass("Github person access token: ")
 
-    run("git", "tag", "-s", version, "-m", "{} release".format(version))
+    run("git", "tag", "-s", version, "-m", f"{version} release")
     run("git", "push", "--tags")
 
     run("python", "setup.py", "sdist")
 
-    sdist = glob.glob("dist/PyNaCl-{}*".format(version))
+    sdist = glob.glob(f"dist/PyNaCl-{version}*")
 
     github_actions_wheel_paths = build_github_actions_wheels(
         github_token, version

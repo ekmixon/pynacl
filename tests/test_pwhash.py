@@ -45,17 +45,16 @@ def argon2i_modular_crypt_ref() -> List[Tuple[str, str]]:
     DATA = "modular_crypt_argon2i_hashes.json"
     path = os.path.join(os.path.dirname(__file__), "data", DATA)
     jvectors = json.load(open(path))
-    vectors = [
+    return [
         (x["pwhash"], x["passwd"]) for x in jvectors if x["mode"] == "crypt"
     ]
-    return vectors
 
 
 def argon2i_raw_ref() -> List[Tuple[int, str, str, int, int, str]]:
     DATA = "raw_argon2i_hashes.json"
     path = os.path.join(os.path.dirname(__file__), "data", DATA)
     jvectors = json.load(open(path))
-    vectors = [
+    return [
         (
             x["dgst_len"],
             x["passwd"],
@@ -67,26 +66,24 @@ def argon2i_raw_ref() -> List[Tuple[int, str, str, int, int, str]]:
         for x in jvectors
         if x["mode"] == "raw"
     ]
-    return vectors
 
 
 def argon2id_modular_crypt_ref() -> List[Tuple[str, str]]:
     DATA = "modular_crypt_argon2id_hashes.json"
     path = os.path.join(os.path.dirname(__file__), "data", DATA)
     jvectors = json.load(open(path))
-    vectors = [
+    return [
         (x["pwhash"], x["passwd"])
         for x in jvectors
         if (x["mode"] == "crypt" and x["construct"] == "argon2id")
     ]
-    return vectors
 
 
 def argon2id_raw_ref() -> List[Tuple[int, str, str, int, int, str]]:
     DATA = "raw_argon2id_hashes.json"
     path = os.path.join(os.path.dirname(__file__), "data", DATA)
     jvectors = json.load(open(path))
-    vectors = [
+    return [
         (
             x["dgst_len"],
             x["passwd"],
@@ -98,7 +95,6 @@ def argon2id_raw_ref() -> List[Tuple[int, str, str, int, int, str]]:
         for x in jvectors
         if (x["mode"] == "raw" and x["construct"] == "argon2id")
     ]
-    return vectors
 
 
 @pytest.mark.skipif(
@@ -438,7 +434,7 @@ def test_str_verify_argon2_ref(password_hash: str, password: str):
 )
 def test_str_verify_argon2_ref_fail(password_hash: str, password: str):
     pw_hash = password_hash.encode("ascii")
-    pw = ("a" + password).encode("ascii")
+    pw = f"a{password}".encode("ascii")
     with pytest.raises(exc.InvalidkeyError):
         nacl.pwhash.argon2id.verify(pw_hash, pw)
 

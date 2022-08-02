@@ -176,20 +176,12 @@ def sip24_vectors() -> List[Tuple[bytes, bytes, bytes]]:
     The key, the messages sequence and the expected hashes are all coming
     from that file's definitions.
     """
-    vectors = []
-    for i, expected in enumerate(HASHES):
-        mesg = MESG[0:i]
-        vectors.append((mesg, KEY, expected))
-    return vectors
+    return [(MESG[:i], KEY, expected) for i, expected in enumerate(HASHES)]
 
 
 def sipx24_vectors() -> List[Tuple[bytes, bytes, bytes]]:
     """Generate test vectors using data from libsodium's tests"""
-    vectors = []
-    for i, expected in enumerate(XHASHES):
-        mesg = MESG[0:i]
-        vectors.append((mesg, KEY, expected))
-    return vectors
+    return [(MESG[:i], KEY, expected) for i, expected in enumerate(XHASHES)]
 
 
 @pytest.mark.parametrize(("inp", "key", "expected"), sip24_vectors())

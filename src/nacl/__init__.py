@@ -36,4 +36,4 @@ __author__ = "The PyNaCl developers"
 __email__ = "cryptography-dev@python.org"
 
 __license__ = "Apache License 2.0"
-__copyright__ = "Copyright 2013-2018 {}".format(__author__)
+__copyright__ = f"Copyright 2013-2018 {__author__}"

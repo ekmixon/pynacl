@@ -75,9 +75,9 @@ class VerifyKey(encoding.Encodable, StringFixer):
 
         if len(key) != nacl.bindings.crypto_sign_PUBLICKEYBYTES:
             raise exc.ValueError(
-                "The key must be exactly %s bytes long"
-                % nacl.bindings.crypto_sign_PUBLICKEYBYTES,
+                f"The key must be exactly {nacl.bindings.crypto_sign_PUBLICKEYBYTES} bytes long"
             )
+
 
         self._key = key
 
@@ -88,9 +88,11 @@ class VerifyKey(encoding.Encodable, StringFixer):
         return hash(bytes(self))
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, self.__class__):
-            return False
-        return nacl.bindings.sodium_memcmp(bytes(self), bytes(other))
+        return (
+            nacl.bindings.sodium_memcmp(bytes(self), bytes(other))
+            if isinstance(other, self.__class__)
+            else False
+        )
 
     def __ne__(self, other: object) -> bool:
         return not (self == other)
@@ -198,9 +200,11 @@ class SigningKey(encoding.Encodable, StringFixer):
         return hash(bytes(self))
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, self.__class__):
-            return False
-        return nacl.bindings.sodium_memcmp(bytes(self), bytes(other))
+        return (
+            nacl.bindings.sodium_memcmp(bytes(self), bytes(other))
+            if isinstance(other, self.__class__)
+            else False
+        )
 
     def __ne__(self, other: object) -> bool:
         return not (self == other)

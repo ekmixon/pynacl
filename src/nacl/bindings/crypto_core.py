@@ -88,11 +88,10 @@ def crypto_core_ed25519_add(p: bytes, q: bytes) -> bytes:
         and isinstance(q, bytes)
         and len(p) == crypto_core_ed25519_BYTES
         and len(q) == crypto_core_ed25519_BYTES,
-        "Each point must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_BYTES"
-        ),
+        'Each point must be a crypto_core_ed25519_BYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_BYTES)
 
@@ -129,11 +128,10 @@ def crypto_core_ed25519_sub(p: bytes, q: bytes) -> bytes:
         and isinstance(q, bytes)
         and len(p) == crypto_core_ed25519_BYTES
         and len(q) == crypto_core_ed25519_BYTES,
-        "Each point must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_BYTES"
-        ),
+        'Each point must be a crypto_core_ed25519_BYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_BYTES)
 
@@ -168,11 +166,10 @@ def crypto_core_ed25519_scalar_invert(s: bytes) -> bytes:
 
     ensure(
         isinstance(s, bytes) and len(s) == crypto_core_ed25519_SCALARBYTES,
-        "Integer s must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_SCALARBYTES"
-        ),
+        'Integer s must be a crypto_core_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 
@@ -204,11 +201,10 @@ def crypto_core_ed25519_scalar_negate(s: bytes) -> bytes:
 
     ensure(
         isinstance(s, bytes) and len(s) == crypto_core_ed25519_SCALARBYTES,
-        "Integer s must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_SCALARBYTES"
-        ),
+        'Integer s must be a crypto_core_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 
@@ -240,11 +236,10 @@ def crypto_core_ed25519_scalar_complement(s: bytes) -> bytes:
 
     ensure(
         isinstance(s, bytes) and len(s) == crypto_core_ed25519_SCALARBYTES,
-        "Integer s must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_SCALARBYTES"
-        ),
+        'Integer s must be a crypto_core_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 
@@ -281,11 +276,10 @@ def crypto_core_ed25519_scalar_add(p: bytes, q: bytes) -> bytes:
         and isinstance(q, bytes)
         and len(p) == crypto_core_ed25519_SCALARBYTES
         and len(q) == crypto_core_ed25519_SCALARBYTES,
-        "Each integer must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_SCALARBYTES"
-        ),
+        'Each integer must be a crypto_core_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 
@@ -322,11 +316,10 @@ def crypto_core_ed25519_scalar_sub(p: bytes, q: bytes) -> bytes:
         and isinstance(q, bytes)
         and len(p) == crypto_core_ed25519_SCALARBYTES
         and len(q) == crypto_core_ed25519_SCALARBYTES,
-        "Each integer must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_SCALARBYTES"
-        ),
+        'Each integer must be a crypto_core_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 
@@ -363,11 +356,10 @@ def crypto_core_ed25519_scalar_mul(p: bytes, q: bytes) -> bytes:
         and isinstance(q, bytes)
         and len(p) == crypto_core_ed25519_SCALARBYTES
         and len(q) == crypto_core_ed25519_SCALARBYTES,
-        "Each integer must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_SCALARBYTES"
-        ),
+        'Each integer must be a crypto_core_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 
@@ -399,11 +391,10 @@ def crypto_core_ed25519_scalar_reduce(s: bytes) -> bytes:
     ensure(
         isinstance(s, bytes)
         and len(s) == crypto_core_ed25519_NONREDUCEDSCALARBYTES,
-        "Integer s must be a {} long bytes sequence".format(
-            "crypto_core_ed25519_NONREDUCEDSCALARBYTES"
-        ),
+        'Integer s must be a crypto_core_ed25519_NONREDUCEDSCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     r = ffi.new("unsigned char[]", crypto_core_ed25519_SCALARBYTES)
 

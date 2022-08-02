@@ -70,12 +70,7 @@ import nacl  # noqa
 def use_system():
     install_type = os.environ.get("SODIUM_INSTALL")
 
-    if install_type == "system":
-        # If we are forcing system installs, don't compile the bundled one
-        return True
-    else:
-        # By default we just use the bundled copy
-        return False
+    return install_type == "system"
 
 
 class Distribution(Distribution):

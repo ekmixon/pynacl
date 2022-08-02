@@ -43,9 +43,7 @@ def crypto_shorthash_siphash24(data: bytes, key: bytes) -> bytes:
     :type key: bytes
     """
     if len(key) != KEYBYTES:
-        raise exc.ValueError(
-            "Key length must be exactly {} bytes".format(KEYBYTES)
-        )
+        raise exc.ValueError(f"Key length must be exactly {KEYBYTES} bytes")
     digest = ffi.new("unsigned char[]", BYTES)
     rc = lib.crypto_shorthash_siphash24(digest, data, len(data), key)
 
@@ -71,9 +69,7 @@ def crypto_shorthash_siphashx24(data: bytes, key: bytes) -> bytes:
     )
 
     if len(key) != XKEYBYTES:
-        raise exc.ValueError(
-            "Key length must be exactly {} bytes".format(XKEYBYTES)
-        )
+        raise exc.ValueError(f"Key length must be exactly {XKEYBYTES} bytes")
     digest = ffi.new("unsigned char[]", XBYTES)
     rc = lib.crypto_shorthash_siphashx24(digest, data, len(data), key)
 

@@ -70,11 +70,10 @@ def crypto_kx_seed_keypair(seed: bytes) -> Tuple[bytes, bytes]:
     secret_key = ffi.new("unsigned char[]", crypto_kx_SECRET_KEY_BYTES)
     ensure(
         isinstance(seed, bytes) and len(seed) == crypto_kx_SEED_BYTES,
-        "Seed must be a {} byte long bytes sequence".format(
-            crypto_kx_SEED_BYTES
-        ),
+        f"Seed must be a {crypto_kx_SEED_BYTES} byte long bytes sequence",
         raising=exc.TypeError,
     )
+
     res = lib.crypto_kx_seed_keypair(public_key, secret_key, seed)
     ensure(res == 0, "Key generation failed.", raising=exc.CryptoError)
 
@@ -103,27 +102,24 @@ def crypto_kx_client_session_keys(
     ensure(
         isinstance(client_public_key, bytes)
         and len(client_public_key) == crypto_kx_PUBLIC_KEY_BYTES,
-        "Client public key must be a {} bytes long bytes sequence".format(
-            crypto_kx_PUBLIC_KEY_BYTES
-        ),
+        f"Client public key must be a {crypto_kx_PUBLIC_KEY_BYTES} bytes long bytes sequence",
         raising=exc.TypeError,
     )
+
     ensure(
         isinstance(client_secret_key, bytes)
         and len(client_secret_key) == crypto_kx_SECRET_KEY_BYTES,
-        "Client secret key must be a {} bytes long bytes sequence".format(
-            crypto_kx_PUBLIC_KEY_BYTES
-        ),
+        f"Client secret key must be a {crypto_kx_PUBLIC_KEY_BYTES} bytes long bytes sequence",
         raising=exc.TypeError,
     )
+
     ensure(
         isinstance(server_public_key, bytes)
         and len(server_public_key) == crypto_kx_PUBLIC_KEY_BYTES,
-        "Server public key must be a {} bytes long bytes sequence".format(
-            crypto_kx_PUBLIC_KEY_BYTES
-        ),
+        f"Server public key must be a {crypto_kx_PUBLIC_KEY_BYTES} bytes long bytes sequence",
         raising=exc.TypeError,
     )
+
 
     rx_key = ffi.new("unsigned char[]", crypto_kx_SESSION_KEY_BYTES)
     tx_key = ffi.new("unsigned char[]", crypto_kx_SESSION_KEY_BYTES)
@@ -161,27 +157,24 @@ def crypto_kx_server_session_keys(
     ensure(
         isinstance(server_public_key, bytes)
         and len(server_public_key) == crypto_kx_PUBLIC_KEY_BYTES,
-        "Server public key must be a {} bytes long bytes sequence".format(
-            crypto_kx_PUBLIC_KEY_BYTES
-        ),
+        f"Server public key must be a {crypto_kx_PUBLIC_KEY_BYTES} bytes long bytes sequence",
         raising=exc.TypeError,
     )
+
     ensure(
         isinstance(server_secret_key, bytes)
         and len(server_secret_key) == crypto_kx_SECRET_KEY_BYTES,
-        "Server secret key must be a {} bytes long bytes sequence".format(
-            crypto_kx_PUBLIC_KEY_BYTES
-        ),
+        f"Server secret key must be a {crypto_kx_PUBLIC_KEY_BYTES} bytes long bytes sequence",
         raising=exc.TypeError,
     )
+
     ensure(
         isinstance(client_public_key, bytes)
         and len(client_public_key) == crypto_kx_PUBLIC_KEY_BYTES,
-        "Client public key must be a {} bytes long bytes sequence".format(
-            crypto_kx_PUBLIC_KEY_BYTES
-        ),
+        f"Client public key must be a {crypto_kx_PUBLIC_KEY_BYTES} bytes long bytes sequence",
         raising=exc.TypeError,
     )
+
 
     rx_key = ffi.new("unsigned char[]", crypto_kx_SESSION_KEY_BYTES)
     tx_key = ffi.new("unsigned char[]", crypto_kx_SESSION_KEY_BYTES)

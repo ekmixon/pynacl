@@ -53,10 +53,6 @@ for header in MINIMAL_HEADERS:
     with open(header) as hfile:
         source.append(hfile.read())
 
-if sys.platform == "win32":
-    libraries = ["libsodium"]
-else:
-    libraries = ["sodium"]
-
+libraries = ["libsodium"] if sys.platform == "win32" else ["sodium"]
 # Set our source so that we can actually build our bindings to sodium.
 ffi.set_source("_sodium", "\n".join(source), libraries=libraries)

@@ -262,11 +262,10 @@ def crypto_sign_ed25519ph_final_create(
     )
     ensure(
         len(sk) == crypto_sign_SECRETKEYBYTES,
-        ("secret key must be {} bytes long").format(
-            crypto_sign_SECRETKEYBYTES
-        ),
+        f"secret key must be {crypto_sign_SECRETKEYBYTES} bytes long",
         raising=exc.TypeError,
     )
+
     signature = ffi.new("unsigned char[]", crypto_sign_BYTES)
     rc = lib.crypto_sign_ed25519ph_final_create(
         edph.state, signature, ffi.NULL, sk
@@ -305,9 +304,10 @@ def crypto_sign_ed25519ph_final_verify(
     )
     ensure(
         len(signature) == crypto_sign_BYTES,
-        ("signature must be {} bytes long").format(crypto_sign_BYTES),
+        f"signature must be {crypto_sign_BYTES} bytes long",
         raising=exc.TypeError,
     )
+
     ensure(
         isinstance(pk, bytes),
         "public key parameter must be a bytes object",
@@ -315,11 +315,10 @@ def crypto_sign_ed25519ph_final_verify(
     )
     ensure(
         len(pk) == crypto_sign_PUBLICKEYBYTES,
-        ("public key must be {} bytes long").format(
-            crypto_sign_PUBLICKEYBYTES
-        ),
+        f"public key must be {crypto_sign_PUBLICKEYBYTES} bytes long",
         raising=exc.TypeError,
     )
+
     rc = lib.crypto_sign_ed25519ph_final_verify(edph.state, signature, pk)
     if rc != 0:
         raise exc.BadSignatureError("Signature was forged or corrupt")

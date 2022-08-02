@@ -21,12 +21,12 @@ import pytest
 
 def assert_equal(x: object, y: object) -> None:
     assert x == y
-    assert not (x != y)
+    assert x == y
 
 
 def assert_not_equal(x: object, y: object) -> None:
     assert x != y
-    assert not (x == y)
+    assert x != y
 
 
 def read_crypto_test_vectors(
@@ -39,7 +39,7 @@ def read_crypto_test_vectors(
         for line in fp:
             line = line.rstrip()
             if line and line[0] != b"#"[0]:
-                splt = [x for x in line.split(delimiter)]
+                splt = list(line.split(delimiter))
                 if maxels:
                     splt = splt[:maxels]
                 vectors.append(tuple(splt))

@@ -83,6 +83,6 @@ def ensure(cond: bool, *args: object, **kwds: Type[Exception]) -> None:
     if kwds:
         raise TypeError(_CHK_UNEXP.format(repr(kwds.popitem()[0])))
 
-    if cond is True:
+    if cond:
         return
     raise raising(*args)

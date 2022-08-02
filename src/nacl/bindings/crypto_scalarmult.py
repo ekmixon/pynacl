@@ -89,11 +89,10 @@ def crypto_scalarmult_ed25519_base(n: bytes) -> bytes:
     ensure(
         isinstance(n, bytes)
         and len(n) == crypto_scalarmult_ed25519_SCALARBYTES,
-        "Input must be a {} long bytes sequence".format(
-            "crypto_scalarmult_ed25519_SCALARBYTES"
-        ),
+        'Input must be a crypto_scalarmult_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     q = ffi.new("unsigned char[]", crypto_scalarmult_ed25519_BYTES)
 
@@ -126,11 +125,10 @@ def crypto_scalarmult_ed25519_base_noclamp(n: bytes) -> bytes:
     ensure(
         isinstance(n, bytes)
         and len(n) == crypto_scalarmult_ed25519_SCALARBYTES,
-        "Input must be a {} long bytes sequence".format(
-            "crypto_scalarmult_ed25519_SCALARBYTES"
-        ),
+        'Input must be a crypto_scalarmult_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     q = ffi.new("unsigned char[]", crypto_scalarmult_ed25519_BYTES)
 
@@ -169,19 +167,17 @@ def crypto_scalarmult_ed25519(n: bytes, p: bytes) -> bytes:
     ensure(
         isinstance(n, bytes)
         and len(n) == crypto_scalarmult_ed25519_SCALARBYTES,
-        "Input must be a {} long bytes sequence".format(
-            "crypto_scalarmult_ed25519_SCALARBYTES"
-        ),
+        'Input must be a crypto_scalarmult_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
 
+
     ensure(
         isinstance(p, bytes) and len(p) == crypto_scalarmult_ed25519_BYTES,
-        "Input must be a {} long bytes sequence".format(
-            "crypto_scalarmult_ed25519_BYTES"
-        ),
+        'Input must be a crypto_scalarmult_ed25519_BYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     q = ffi.new("unsigned char[]", crypto_scalarmult_ed25519_BYTES)
 
@@ -218,19 +214,17 @@ def crypto_scalarmult_ed25519_noclamp(n: bytes, p: bytes) -> bytes:
     ensure(
         isinstance(n, bytes)
         and len(n) == crypto_scalarmult_ed25519_SCALARBYTES,
-        "Input must be a {} long bytes sequence".format(
-            "crypto_scalarmult_ed25519_SCALARBYTES"
-        ),
+        'Input must be a crypto_scalarmult_ed25519_SCALARBYTES long bytes sequence',
         raising=exc.TypeError,
     )
 
+
     ensure(
         isinstance(p, bytes) and len(p) == crypto_scalarmult_ed25519_BYTES,
-        "Input must be a {} long bytes sequence".format(
-            "crypto_scalarmult_ed25519_BYTES"
-        ),
+        'Input must be a crypto_scalarmult_ed25519_BYTES long bytes sequence',
         raising=exc.TypeError,
     )
+
 
     q = ffi.new("unsigned char[]", crypto_scalarmult_ed25519_BYTES)
 

@@ -251,8 +251,9 @@ def test_secret_box_wrong_nonce_length(box: SecretBox, nonce: bytes):
 @pytest.mark.parametrize("cls", (SecretBox, Aead))
 def test_wrong_types(cls: Type[_BoxType]):
     expected = re.compile(
-        cls.__name__ + " must be created from 32 bytes", re.IGNORECASE
+        f"{cls.__name__} must be created from 32 bytes", re.IGNORECASE
     )
+
     # Type safety: we're checking these type errors are detected at runtime.
     with pytest.raises(TypeError, match=expected):
         cls(12)  # type: ignore[arg-type]

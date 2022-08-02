@@ -27,7 +27,7 @@ class CustomError(exc.CryptoError):
 
 
 def test_exceptions_ensure_with_true_condition():
-    exc.ensure(1 == 1, "one equals one")
+    exc.ensure(True, "one equals one")
 
 
 def test_exceptions_ensure_with_false_condition():
@@ -41,10 +41,7 @@ def test_exceptions_ensure_with_false_condition():
 
 def test_exceptions_ensure_with_unwanted_kwarg():
     with pytest.raises(exc.TypeError):
-        exc.ensure(
-            1 == 1,
-            unexpected="unexpected",  # type: ignore[arg-type]
-        )
+        exc.ensure(True, unexpected="unexpected")
 
 
 def test_exceptions_ensure_custom_exception():

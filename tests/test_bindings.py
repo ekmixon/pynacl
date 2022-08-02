@@ -277,7 +277,7 @@ def test_box_seal_wrong_types():
     A_pubkey, A_secretkey = c.crypto_box_keypair()
     # type safety: mypy can spot these errors, but we want to spot them at runtime too.
     with pytest.raises(TypeError):
-        c.crypto_box_seal(b"abc", dict())  # type: ignore[arg-type]
+        c.crypto_box_seal(b"abc", {})
     with pytest.raises(TypeError):
         c.crypto_box_seal_open(b"abc", None, A_secretkey)  # type: ignore[arg-type]
     with pytest.raises(TypeError):
@@ -463,7 +463,7 @@ def test_sign_ed25519ph_libsodium():
 
     edph_incr = c.crypto_sign_ed25519ph_state()
     c.crypto_sign_ed25519ph_update(edph_incr, b"")
-    c.crypto_sign_ed25519ph_update(edph_incr, msg[0 : len(msg) // 2])
+    c.crypto_sign_ed25519ph_update(edph_incr, msg[:len(msg) // 2])
     c.crypto_sign_ed25519ph_update(edph_incr, msg[len(msg) // 2 :])
 
     assert c.crypto_sign_ed25519ph_final_verify(edph_incr, exp_sig, pk) is True
@@ -533,11 +533,11 @@ def test_scalarmult_ed25519():
     p, _s = c.crypto_sign_keypair()
     _p = p
 
-    for i in range(254):
+    for _ in range(254):
         # double _p
         _p = c.crypto_core_ed25519_add(_p, _p)
 
-    for i in range(8):
+    for _ in range(8):
         _p = c.crypto_core_ed25519_add(_p, p)
 
     # at this point _p is (2^254+8) times p
@@ -551,7 +551,7 @@ def test_scalarmult_ed25519():
     assert c.crypto_scalarmult_ed25519(MIN_P7, p) == _p
 
     _p8 = _p
-    for i in range(8):
+    for _ in range(8):
         _p8 = c.crypto_core_ed25519_add(_p8, p)
 
     # at this point _p is (2^254 + 16) times p

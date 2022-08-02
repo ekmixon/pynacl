@@ -59,12 +59,11 @@ def blake2_reference_vectors() -> List[Tuple[str, str, int, str]]:
     DATA = "blake2-kat.json"
     path = os.path.join(os.path.dirname(__file__), "data", DATA)
     jvectors: List[Dict[str, str]] = json.load(open(path))
-    vectors = [
+    return [
         (x["in"], x["key"], len(x["out"]) // 2, x["out"])
         for x in jvectors
         if x["hash"] == "blake2b"
     ]
-    return vectors
 
 
 @pytest.mark.parametrize(
@@ -161,7 +160,7 @@ def test_hashlib_blake2_ref_vectors(
 ):
     msg = binascii.unhexlify(message)
     k = binascii.unhexlify(key)
-    outlen = int(outlen)
+    outlen = outlen
     out = binascii.unhexlify(output)
     h = nacl.hashlib.blake2b(msg, digest_size=outlen, key=k)
     dgst = h.digest()
@@ -176,7 +175,7 @@ def test_hashlib_blake2_iuf_ref_vectors(
 ):
     msg = binascii.unhexlify(message)
     k = binascii.unhexlify(key)
-    outlen = int(outlen)
+    outlen = outlen
     out = binascii.unhexlify(output)
     h = nacl.hashlib.blake2b(digest_size=outlen, key=k)
     for _pos in range(len(msg)):
@@ -199,7 +198,7 @@ def test_hashlib_blake2_iuf_cp_ref_vectors(
     if msglen < 2:
         pytest.skip("Message too short for splitting")
     k = binascii.unhexlify(key)
-    outlen = int(outlen)
+    outlen = outlen
     out = binascii.unhexlify(output)
     h = nacl.hashlib.blake2b(digest_size=outlen, key=k)
     for _pos in range(len(msg)):

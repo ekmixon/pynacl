@@ -115,9 +115,7 @@ class blake2b:
         Raise the same exception as hashlib's blake implementation
         on copy.copy()
         """
-        raise TypeError(
-            "can't pickle {} objects".format(self.__class__.__name__)
-        )
+        raise TypeError(f"can't pickle {self.__class__.__name__} objects")
 
 
 def scrypt(

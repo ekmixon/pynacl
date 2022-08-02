@@ -9,36 +9,36 @@ dirs = set()
 tlv1 = ""
 for file in glob.iglob("src/libsodium/**/*.c", recursive=True):
     file = file.replace("/", "\\")
-    tlv1 = tlv1 + '    <ClCompile Include="{}" />\r\n'.format(file)
+    tlv1 = tlv1 + f'    <ClCompile Include="{file}" />\r\n'
 
 tlv2 = ""
 for file in glob.iglob("src/libsodium/**/*.h", recursive=True):
     file = file.replace("/", "\\")
-    tlv2 = tlv2 + '    <ClInclude Include="{}" />\r\n'.format(file)
+    tlv2 = tlv2 + f'    <ClInclude Include="{file}" />\r\n'
 
 tlf1 = ""
 for file in glob.iglob("src/libsodium/**/*.c", recursive=True):
     file = file.replace("/", "\\")
-    tlf1 = tlf1 + '    <ClCompile Include="{}">\r\n'.format(file)
+    tlf1 = tlf1 + f'    <ClCompile Include="{file}">\r\n'
     tlf1 = tlf1 + "      <Filter>Source Files</Filter>\r\n"
     tlf1 = tlf1 + "    </ClCompile>\r\n"
 
 tlf2 = ""
 for file in glob.iglob("src/libsodium/**/*.h", recursive=True):
     file = file.replace("/", "\\")
-    tlf2 = tlf2 + '    <ClInclude Include="{}">\r\n'.format(file)
+    tlf2 = tlf2 + f'    <ClInclude Include="{file}">\r\n'
     tlf2 = tlf2 + "      <Filter>Header Files</Filter>\r\n"
     tlf2 = tlf2 + "    </ClInclude>\r\n"
 
 v1 = ""
 for file in glob.iglob("src/libsodium/**/*.c", recursive=True):
     file = file.replace("/", "\\")
-    v1 = v1 + '    <ClCompile Include="..\\..\\..\\..\\{}" />\r\n'.format(file)
+    v1 = v1 + f'    <ClCompile Include="..\\..\\..\\..\\{file}" />\r\n'
 
 v2 = ""
 for file in glob.iglob("src/libsodium/**/*.h", recursive=True):
     file = file.replace("/", "\\")
-    v2 = v2 + '    <ClInclude Include="..\\..\\..\\..\\{}" />\r\n'.format(file)
+    v2 = v2 + f'    <ClInclude Include="..\\..\\..\\..\\{file}" />\r\n'
 
 f1 = ""
 for file in glob.iglob("src/libsodium/**/*.c", recursive=True):
@@ -49,8 +49,8 @@ for file in glob.iglob("src/libsodium/**/*.c", recursive=True):
         t = os.path.dirname(t)
     basedir = basedir.replace("/", "\\")
     file = file.replace("/", "\\")
-    f1 = f1 + '    <ClCompile Include="..\\..\\..\\..\\{}">\r\n'.format(file)
-    f1 = f1 + "      <Filter>{}</Filter>\r\n".format(basedir)
+    f1 = f1 + f'    <ClCompile Include="..\\..\\..\\..\\{file}">\r\n'
+    f1 = f1 + f"      <Filter>{basedir}</Filter>\r\n"
     f1 = f1 + "    </ClCompile>\r\n"
 
 f2 = ""
@@ -62,17 +62,16 @@ for file in glob.iglob("src/libsodium/**/*.h", recursive=True):
         t = os.path.dirname(t)
     basedir = basedir.replace("/", "\\")
     file = file.replace("/", "\\")
-    f2 = f2 + '    <ClInclude Include="..\\..\\..\\..\\{}">\r\n'.format(file)
-    f2 = f2 + "      <Filter>{}</Filter>\r\n".format(basedir)
+    f2 = f2 + f'    <ClInclude Include="..\\..\\..\\..\\{file}">\r\n'
+    f2 = f2 + f"      <Filter>{basedir}</Filter>\r\n"
     f2 = f2 + "    </ClInclude>\r\n"
 
 fd = ""
-dirs = list(dirs)
-dirs.sort()
+dirs = sorted(dirs)
 for dir in dirs:
     dir = dir.replace("/", "\\")
     uid = uuid.uuid3(uuid.UUID(bytes=b"LibSodiumMSVCUID"), dir)
-    fd = fd + '    <Filter Include="{}">\r\n'.format(dir)
+    fd = fd + f'    <Filter Include="{dir}">\r\n'
     fd = fd + "      <UniqueIdentifier>{{{}}}</UniqueIdentifier>\r\n".format(
         uid
     )
@@ -108,81 +107,93 @@ sbox = {
 sd = os.path.dirname(os.path.realpath(__file__))
 
 apply_template(
-    sd + "/tl_libsodium.vcxproj.filters.tpl", "libsodium.vcxproj.filters", sbox
+    f"{sd}/tl_libsodium.vcxproj.filters.tpl", "libsodium.vcxproj.filters", sbox
 )
 
-sbox.update({"platform": "v140"})
-apply_template(sd + "/tl_libsodium.vcxproj.tpl", "libsodium.vcxproj", sbox)
+
+sbox["platform"] = "v140"
+apply_template(f"{sd}/tl_libsodium.vcxproj.tpl", "libsodium.vcxproj", sbox)
 
 apply_template(
-    sd + "/libsodium.vcxproj.filters.tpl",
+    f"{sd}/libsodium.vcxproj.filters.tpl",
     "builds/msvc/vs2019/libsodium/libsodium.vcxproj.filters",
     sbox,
 )
+
 apply_template(
-    sd + "/libsodium.vcxproj.filters.tpl",
+    f"{sd}/libsodium.vcxproj.filters.tpl",
     "builds/msvc/vs2017/libsodium/libsodium.vcxproj.filters",
     sbox,
 )
+
 apply_template(
-    sd + "/libsodium.vcxproj.filters.tpl",
+    f"{sd}/libsodium.vcxproj.filters.tpl",
     "builds/msvc/vs2015/libsodium/libsodium.vcxproj.filters",
     sbox,
 )
+
 apply_template(
-    sd + "/libsodium.vcxproj.filters.tpl",
+    f"{sd}/libsodium.vcxproj.filters.tpl",
     "builds/msvc/vs2013/libsodium/libsodium.vcxproj.filters",
     sbox,
 )
+
 apply_template(
-    sd + "/libsodium.vcxproj.filters.tpl",
+    f"{sd}/libsodium.vcxproj.filters.tpl",
     "builds/msvc/vs2012/libsodium/libsodium.vcxproj.filters",
     sbox,
 )
+
 apply_template(
-    sd + "/libsodium.vcxproj.filters.tpl",
+    f"{sd}/libsodium.vcxproj.filters.tpl",
     "builds/msvc/vs2010/libsodium/libsodium.vcxproj.filters",
     sbox,
 )
 
-sbox.update({"platform": "v142"})
+
+sbox["platform"] = "v142"
 apply_template(
-    sd + "/libsodium.vcxproj.tpl",
+    f"{sd}/libsodium.vcxproj.tpl",
     "builds/msvc/vs2019/libsodium/libsodium.vcxproj",
     sbox,
 )
 
-sbox.update({"platform": "v141"})
+
+sbox["platform"] = "v141"
 apply_template(
-    sd + "/libsodium.vcxproj.tpl",
+    f"{sd}/libsodium.vcxproj.tpl",
     "builds/msvc/vs2017/libsodium/libsodium.vcxproj",
     sbox,
 )
 
-sbox.update({"platform": "v140"})
+
+sbox["platform"] = "v140"
 apply_template(
-    sd + "/libsodium.vcxproj.tpl",
+    f"{sd}/libsodium.vcxproj.tpl",
     "builds/msvc/vs2015/libsodium/libsodium.vcxproj",
     sbox,
 )
 
-sbox.update({"platform": "v120"})
+
+sbox["platform"] = "v120"
 apply_template(
-    sd + "/libsodium.vcxproj.tpl",
+    f"{sd}/libsodium.vcxproj.tpl",
     "builds/msvc/vs2013/libsodium/libsodium.vcxproj",
     sbox,
 )
 
-sbox.update({"platform": "v110"})
+
+sbox["platform"] = "v110"
 apply_template(
-    sd + "/libsodium.vcxproj.tpl",
+    f"{sd}/libsodium.vcxproj.tpl",
     "builds/msvc/vs2012/libsodium/libsodium.vcxproj",
     sbox,
 )
 
-sbox.update({"platform": "v100"})
+
+sbox["platform"] = "v100"
 apply_template(
-    sd + "/libsodium.vcxproj.tpl",
+    f"{sd}/libsodium.vcxproj.tpl",
     "builds/msvc/vs2010/libsodium/libsodium.vcxproj",
     sbox,
 )

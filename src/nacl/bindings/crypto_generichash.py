@@ -168,9 +168,7 @@ class Blake2State:
         Raise the same exception as hashlib's blake implementation
         on copy.copy()
         """
-        raise TypeError(
-            "can't pickle {} objects".format(self.__class__.__name__)
-        )
+        raise TypeError(f"can't pickle {self.__class__.__name__} objects")
 
     def copy(self: _Blake2State) -> _Blake2State:
         _st = self.__class__(self.digest_size)

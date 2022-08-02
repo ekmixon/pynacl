@@ -303,11 +303,10 @@ def crypto_box_seal_open(ciphertext: bytes, pk: bytes, sk: bytes) -> bytes:
 
     ensure(
         _clen >= crypto_box_SEALBYTES,
-        ("Input ciphertext must be at least {} long").format(
-            crypto_box_SEALBYTES
-        ),
+        f"Input ciphertext must be at least {crypto_box_SEALBYTES} long",
         raising=exc.TypeError,
     )
+
 
     _mlen = _clen - crypto_box_SEALBYTES
 
